@@ -32,7 +32,7 @@ const item1 = new Item({
   name: "Wellcome to your todolist",
 });
 const item2 = new Item({
-  name: "Hit the + button to aff a new item.",
+  name: "Hit the + button to add a new item.",
 });
 const item3 = new Item({
   name: "← hit this to delete an item",
