@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const _ = require("lodash");
 const app = express();
+
 const PORT = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 
@@ -20,13 +21,6 @@ const itemSchema = {
 };
 
 const Item = mongoose.model("Item", itemSchema);
-
-const LitsSchema = {
-  name: String,
-  items: [itemSchema],
-};
-
-const List = mongoose.model("List", LitsSchema);
 
 const item1 = new Item({
   name: "Wellcome to your todolist",
@@ -113,26 +107,6 @@ app.post("/delete", (req, res) => {
         console.log(err);
       });
   }
-});
-
-//code: tiger
-app.get("/:customListName", function (req, res) {
-  const customListName = _.capitalize(req.params.customListName);
-
-  List.findOne({ name: customListName }).then(function (foundList) {
-    if (!foundList) {
-      const list = new List({
-        name: customListName,
-        items: defaultItems,
-      });
-      list.save().then(() => res.redirect("/" + customListName));
-    } else {
-      res.render("list", {
-        listTitle: foundList.name,
-        newListItems: foundList.items,
-      });
-    }
-  });
 });
 
 app.get("/about", function (req, res) {
